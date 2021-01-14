@@ -2,73 +2,81 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script>
-    function game() {
-        let i = 1;
-	    let playerScore = 0;
-	    let computerScore = 0;
-
-
-	    function computerPlay() {
-		    let play = ["Rock", "Paper", "Scissors"];
-		    return play[Math.floor(Math.random() * 3)];
-	    }
-
-
-
-	    while(i < 6) {
-            let computerSelection = computerPlay();
-	        let playerSelection = prompt("Enter your selection:");
-
-	        function playRound(playerSelection, computerSelection) {
-		        if (playerSelection == "Rock" && computerSelection == "Paper") {
-			        console.log("You lose!");
-			        computerScore++;
-	            }
-		        else if (playerSelection == "Rock" && computerSelection == "Scissors") {
-			        console.log("You win!");
-			        playerScore++;
-		        }
-  	            else if (playerSelection == "Paper" && computerSelection == "Rock"){
-    		        console.log("You win!");
-				    playerScore++;
-  	            }
-		        else if (playerSelection == "Paper" && computerSelection == "Scissors") {
-    		        console.log("You lose!");
-				    computerScore++;
-  	            }
-				else if (playerSelection == "Scissors" && computerSelection == "Paper") {
-					console.log("You win!");
-					playerScore++;
-				}
-				else if (playerSelection == "Scissors" && computerSelection == "Rock") {
-					console.log("You lose!");
-					computerScore++;
-				}
-				else {
-					alert("TIE!");
-				}	
-			}
-			console.log("Round " + i );
-			console.log(playRound(playerSelection, computerSelection));
-			console.log("The computer selection was: " + computerSelection);
-			i++;	
-		}
-
-        if(playerScore > computerScore) {
-	        console.log("You win the game");
-        }
-
-        else {
-	        console.log("The computer wins the game");
-        }
-
-    }
-    </script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="style.css">
+    <title>Rock Paper Scissors</title>
 </head>
 <body>
-    
+	<h1 class="round"></h1>
+	<div class="result"></div>
+	<li class="player">
+		<button id="rock">Rock</button>
+		<button id="paper">Paper</button>
+		<button id="scissors">Scissors</button>
+	</li>
+
+
+
+	<script>
+		let computerScore = 0;
+		let playerScore = 0;
+		const div = document.querySelector('div');
+		const buttons = document.querySelectorAll(`.player button`);
+		let choices=['rock', 'paper', 'scissors'];
+
+		const playRound = () => {
+			buttons.forEach( btn =>  {
+				btn.addEventListener('click', (e) => {
+					let playerChoice = e.target.id;
+					let randomNum = Math.floor(Math.random() * choices.length);
+					computerChoice = choices[randomNum];
+					if (playerScore != 5 && computerScore != 5) {
+						if(playerChoice == computerChoice) {
+						div.innerHTML = 'TIE!';
+						div.style.color = 'orange';
+						}
+						else if(playerChoice == choices[0] && computerChoice == choices[1]) {
+							div.innerHTML = 'You lose!';
+							div.style.color = 'red';
+							computerScore++;
+						}
+						else if(playerChoice == choices[0] && computerChoice == choices[2]) {
+							div.innerHTML = 'You win!';
+							div.style.color = 'green';
+							playerScore++;
+						}
+						else if(playerChoice == choices[1] && computerChoice == choices[0]) {
+							div.innerHTML = 'You win!';
+							div.style.color = 'green';
+							playerScore++;
+						}
+						else if(playerChoice == choices[1] && computerChoice == choices[2]) {
+							div.innerHTML = 'You lose!';
+							div.style.color = 'red';
+							computerScore++;
+						}
+						else if(playerChoice == choices[2] && computerChoice == choices[0]) {
+							div.innerHTML = 'You lose!';
+							div.style.color = 'red';
+							computerScore++;
+						}
+						else if(playerChoice == choices[2] && computerChoice == choices[1]) {
+							div.innerHTML = 'You win!';
+							div.style.color = 'green';
+							playerScore++;
+						}
+					}
+					else if(playerScore == 5) {
+						div.innerHTML = 'You win the game motherfucka!';
+					}
+					else {
+						div.innerHTML = 'You lost DUMBASS!';
+					}
+				})
+			})
+		}
+		
+		playRound();
+	</script>
 </body>
 </html>
